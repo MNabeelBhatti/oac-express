@@ -1,0 +1,12 @@
+.main_layout_div{
+    width: 100%;
+    min-height: 100vh;
+}
+.ant-layout {
+    min-height: 100vh !important;
+}
+
+
+.site-layout .site-layout-background {
+  background: #fff;
+}

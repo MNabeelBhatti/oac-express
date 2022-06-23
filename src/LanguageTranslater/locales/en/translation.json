@@ -1,0 +1,39 @@
+{
+  "welcome": "Welcome to OAC EXPRESS",
+    "buttonsTxt": {
+     "login": "Login",
+     "register": "Register"
+   },
+   "bottomTabs": {},
+   "headers": {
+     "loginAndJoin": "Login & Join Us!",
+     "letsRegister": "Lets Register!"
+   },
+   "placeholders": {
+     "inputEmail": "Input email",
+     "inputPass": "Input password",
+     "inputName": "Input name",
+     "ConfirmPass": "Confirm password"
+   },
+
+
+   "alerts": {},
+   "allTxts": {
+     "orRegister": "Or Register",
+     "email": "Email",
+     "password": "Passwrod",
+     "name": "Name",
+     "confirmPass": "Confirm Password",
+     "notHaveAccount": "Not have an account?"
+   },
+   "errorsTxt": {
+     "requiredField": "Required field",
+     "minimumLength": "Minimun length of 8 characters",
+     "minimumInput": "Minimum Input",
+     "limitExceed": "Limit Exceeded",
+     "invalidEmail": "Invalid email",
+     "passwordMatch": "Passwords must match",
+     "error": "Error :"
+   }
+ 
+}

@@ -1,0 +1,10 @@
+export const REQUEST_USER = "";
+export const USER_REQUEST = "USER_REQUEST";
+export const USER_SUCCESS = "USER_SUCCESS";
+export const USER_FAILURE = "USER_FAILURE";
+export const FUCTIONS_BANQUETING_DATA = "FUCTIONS_BANQUETING_DATA";
+export const CALLS_RESPONSE = "CALLS_RESPONSE";
+export const TEAM_MEMBER = "TEAM_MEMBER";
+export const LANGUAGE = "LANGUAGE";
+
+

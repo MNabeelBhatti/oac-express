@@ -1,0 +1,34 @@
+
+.table_topar_div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.table_topar_add_div{
+    width:fit-content ;
+}
+.table_topar_add_div_{
+    width:fit-content ;
+    margin-top: 10px;
+}
+.table_topar_switch_div{
+    width:fit-content ;
+    
+}
+.topar_switch_div{
+    /* border-radius: 15px; */
+    border: 1px solid var(--primaryColor);
+    padding: 5px;
+    display: flex;
+}
+.txt_span{
+    color: var(--primaryColor);
+    margin-right: 10px;
+}
+.table_search_div{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.rounded_radio_btn{
+    border-radius: 10px;
+}
