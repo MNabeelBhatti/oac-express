@@ -7,8 +7,11 @@ import {
   MenuUnfoldOutlined,
   UploadOutlined,
   VideoCameraOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { BsTruck } from "react-icons/bs";
+import { ImCoinDollar } from "react-icons/im";
+
 const { Sider } = Layout;
 
 export default function OwnerSideBar({ collapsed }) {
@@ -28,7 +31,7 @@ const navigate=useNavigate()
           items={[
             {
               key: "1",
-              icon: <BsTruck />,
+              icon: <SettingOutlined />,
               label: "Fleet Managment",
               onClick: () => {
                 navigate("/home/owner/fleet_managment");
@@ -36,7 +39,7 @@ const navigate=useNavigate()
             },
             {
               key: "2",
-              icon: <VideoCameraOutlined />,
+              icon: <BsTruck/>,
               label: "Transportation Requests",
               onClick: () => {
                 navigate("/home/owner/transportation_requests");
@@ -44,7 +47,7 @@ const navigate=useNavigate()
             },
             {
               key: "3",
-              icon: <UploadOutlined />,
+              icon: <ImCoinDollar/>,
               label: "Finance",
               onClick: () => {
                 navigate("/home/owner/finance");

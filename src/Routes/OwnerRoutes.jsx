@@ -1,7 +1,9 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Appointment from "../Components/Appointment/Appointment";
 import OwnerLayout from "../Components/Layouts/OwnerLayout/Layout/OwnerLayout";
+import FleetManagment from "../Components/OwnerComponents/Fleet Mangment/FleetManagment";
+import TRequests from "../Components/OwnerComponents/TRequests/TRequests";
+import Finance from "../Components/OwnerComponents/Finance/Finance";
 export default function OwnerRoutes() {
   return (
     <div>
@@ -10,7 +12,7 @@ export default function OwnerRoutes() {
           path="fleet_managment"
           element={
             <OwnerLayout>
-              <Appointment />
+          <FleetManagment/>
             </OwnerLayout>
           }
         />
@@ -18,7 +20,7 @@ export default function OwnerRoutes() {
           path="transportation_requests"
           element={
             <OwnerLayout>
-              <Appointment />
+              <TRequests/>
             </OwnerLayout>
           }
         />
@@ -26,7 +28,7 @@ export default function OwnerRoutes() {
           path="finance"
           element={
             <OwnerLayout>
-              <Appointment />
+              <Finance />
             </OwnerLayout>
           }
         />
