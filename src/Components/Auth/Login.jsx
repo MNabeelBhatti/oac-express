@@ -1,8 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./login.css";
-import { useTranslation,Trans } from "react-i18next";
-import {useNavigate} from 'react-router-dom'
+import { useTranslation, Trans } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
+import en from "../../LanguageTranslater/locales/en/translation.json";
 import {
   Button,
   Checkbox,
@@ -15,29 +16,29 @@ import {
   Col,
 } from "antd";
 export default function Login() {
-    const { t, i18n } = useTranslation();
-    const navigate=useNavigate()
+  const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const [input, setInput] = useState(true);
   const [login, setLogin] = useState(true);
+  const [lng, setLng] = useState('en');
 
   const onFinishLogin = (values) => {
     console.log("Received values of form: ", values);
-    if (values.type==='owner') {
+    if (values.type === "owner") {
       navigate("/home/owner/fleet_managment");
     } else {
       navigate("/home/customer/apponentment");
     }
 
-        // navigate("/home/customer/apponentment");
+    // navigate("/home/customer/apponentment");
   };
   const onFinishSignup = (values) => {
-      console.log("Received values of form: ", values);
-       if (values.type === "owner") {
-         navigate("/home/owner/fleet_managment");
-       } else {
-         navigate("/home/customer/apponentment");
-       }
-
+    console.log("Received values of form: ", values);
+    if (values.type === "owner") {
+      navigate("/home/owner/fleet_managment");
+    } else {
+      navigate("/home/customer/apponentment");
+    }
   };
 
   return (
@@ -58,10 +59,11 @@ export default function Login() {
 
                   <div className="change-locale">
                     <Radio.Group
-                      defaultValue="en"
+                      value={lng}
                       buttonStyle="solid"
                       onChange={(e) => {
                         let lng = e.target.value;
+                        setLng(lng)
                         i18n.changeLanguage(lng);
 
                         // i18n.language = lng;
@@ -97,11 +99,11 @@ export default function Login() {
                           rules={[
                             {
                               type: "email",
-                              message: "The input is not valid E-mail!",
+                              message: t("errorsTxt.invalidEmail"),
                             },
                             {
                               required: true,
-                              message: "Please input your E-mail!",
+                              message: t("errorsTxt.requiredField"),
                             },
                           ]}
                         >
@@ -110,7 +112,7 @@ export default function Login() {
                             prefix={
                               <MailOutlined className="site-form-item-icon" />
                             }
-                            placeholder="User Email"
+                            placeholder={t("placeholders.inputEmail")}
                           />
                         </Form.Item>
                         <Form.Item
@@ -118,11 +120,11 @@ export default function Login() {
                           rules={[
                             {
                               required: true,
-                              message: "Please input your Password!",
+                              message: t("errorsTxt.requiredField"),
                             },
                             {
                               min: 8,
-                              message: "Please enter 8 digit Password!",
+                              message: t("errorsTxt.minimumLength"),
                             },
                           ]}
                         >
@@ -131,7 +133,7 @@ export default function Login() {
                               <LockOutlined className="site-form-item-icon" />
                             }
                             type="password"
-                            placeholder="Password"
+                            placeholder={t("placeholders.inputPass")}
                             minLength={8}
                           />
                         </Form.Item>
@@ -151,18 +153,20 @@ export default function Login() {
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please Select type",
+                                  message: t("errorsTxt.requiredField"),
                                 },
                               ]}
                             >
-                              <Radio.Group >
-                                <Radio value={"owner"}>Owner</Radio>
-                                <Radio value={"customer"}>Customer</Radio>
+                              <Radio.Group>
+                                <Radio value={"owner"}>{t("Owner")}</Radio>
+                                <Radio value={"customer"}>
+                                  {t("Customer")}
+                                </Radio>
                               </Radio.Group>
                             </Form.Item>
 
                             <a className="login-form-forgot">
-                              <b>Forgot password?</b>
+                              <b>{t("account.forget_password")}?</b>
                             </a>
                           </div>
                         </Form.Item>
@@ -179,14 +183,14 @@ export default function Login() {
 
                         <div>
                           <Divider orientation="center">
-                            Don't have an account?{" "}
+                            {t("account.dont_have_account")}?{" "}
                             <a
                               onClick={(e) => {
                                 e.preventDefault();
                                 setLogin(!login);
                               }}
                             >
-                              Register Now!
+                              {t("account.register_now")}
                             </a>
                           </Divider>
                         </div>
@@ -202,14 +206,14 @@ export default function Login() {
                         }}
                         onFinish={onFinishSignup}
                       >
-                        <Row className="gutter-row">
-                          <Col span={11}>
+                        <Row gutter={24}>
+                          <Col span={12}>
                             <Form.Item
                               name="userName"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input User Name!",
+                                  message: t("errorsTxt.requiredField"),
                                 },
                               ]}
                             >
@@ -218,21 +222,21 @@ export default function Login() {
                                 prefix={
                                   <UserOutlined className="site-form-item-icon" />
                                 }
-                                placeholder="User Name"
+                                placeholder={t("placeholders.inputName")}
                               />
                             </Form.Item>
                           </Col>
-                          <Col span={11} style={{ marginLeft: "10px" }}>
+                          <Col span={12}>
                             <Form.Item
                               name="useremail"
                               rules={[
                                 {
                                   type: "email",
-                                  message: "The input is not valid E-mail!",
+                                  message: t("errorsTxt.invalidEmail"),
                                 },
                                 {
                                   required: true,
-                                  message: "Please input your E-mail!",
+                                  message: t("errorsTxt.requiredField"),
                                 },
                               ]}
                             >
@@ -241,23 +245,23 @@ export default function Login() {
                                 prefix={
                                   <MailOutlined className="site-form-item-icon" />
                                 }
-                                placeholder="User Email"
+                                placeholder={t("placeholders.inputEmail")}
                               />
                             </Form.Item>
                           </Col>
                         </Row>
-                        <Row className="gutter-row">
-                          <Col span={11}>
+                        <Row gutter={24}>
+                          <Col span={12}>
                             <Form.Item
                               name="password"
                               rules={[
                                 {
                                   required: true,
-                                  message: "Please input your Password!",
+                                  message: t("errorsTxt.requiredField"),
                                 },
                                 {
                                   min: 8,
-                                  message: "Please enter 8 digit Password!",
+                                  message: t("errorsTxt.minimumLength"),
                                 },
                               ]}
                             >
@@ -266,24 +270,23 @@ export default function Login() {
                                   <LockOutlined className="site-form-item-icon" />
                                 }
                                 type="password"
-                                placeholder="Password"
+                                placeholder={t("placeholders.inputPass")}
                                 minLength={8}
                               />
                             </Form.Item>
                           </Col>
 
-                          <Col span={11} style={{ marginLeft: "10px" }}>
+                          <Col span={12}>
                             <Form.Item
                               name="confirmPassword"
                               rules={[
                                 {
                                   required: true,
-                                  message:
-                                    "Please input your Confirm Password!",
+                                  message: t("errorsTxt.requiredField"),
                                 },
                                 {
                                   min: 8,
-                                  message: "Please enter 8 digit Password!",
+                                  message: t("errorsTxt.minimumLength"),
                                 },
                                 ({ getFieldValue }) => ({
                                   validator(_, value) {
@@ -295,9 +298,7 @@ export default function Login() {
                                     }
 
                                     return Promise.reject(
-                                      new Error(
-                                        "The two passwords that you entered do not match!"
-                                      )
+                                      new Error(t("ConfirmPass"))
                                     );
                                   },
                                 }),
@@ -308,7 +309,7 @@ export default function Login() {
                                   <LockOutlined className="site-form-item-icon" />
                                 }
                                 type="password"
-                                placeholder="Confirm Password"
+                                placeholder={t("placeholders.ConfirmPass")}
                                 minLength={8}
                               />
                             </Form.Item>
@@ -324,9 +325,9 @@ export default function Login() {
                             },
                           ]}
                         >
-                          <Radio.Group >
-                            <Radio value={"owner"}>Owner</Radio>
-                            <Radio value={"customer"}>Customer</Radio>
+                          <Radio.Group>
+                            <Radio value={"owner"}>{t("Owner")}</Radio>
+                            <Radio value={"customer"}>{t("Customer")}</Radio>
                           </Radio.Group>
                         </Form.Item>
 

@@ -1,6 +1,19 @@
 
 {
   "welcome": "مرحبًا بكم في OAC EXPRESS",
+  "Owner": "صاحب",
+  "Customer": "عميل",
+  "account": {
+    "dont_have_account": "ليس لديك حساب",
+    "already_have_account": "هل لديك حساب",
+    "register_now": "سجل الان",
+    "forget_password": "نسيت كلمة المرور"
+  },
+  "routes": {
+    "fleet_managment": "إدارة الأسطول",
+    "transportation_request": "طلب النقل",
+    "finance": "المالية"
+  },
   "buttonsTxt": {
     "login": "تسجيل الدخول",
     "register": "يسجل"
@@ -16,7 +29,6 @@
     "inputName": "اسم الإدخال",
     "ConfirmPass": "تأكيد كلمة المرور"
   },
-
 
   "alerts": {},
   "allTxts": {

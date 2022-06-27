@@ -12,6 +12,11 @@
     min-width: 70%;
     min-height: 70vh;
     display: flex;
+      /* -webkit-transform:rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg); */
+  /* transform: rotateY(180deg); */
 }
 .login_wlp_div{
     min-width: 30%;
@@ -63,6 +68,7 @@
 .submit_btn{
     width: 100%;
 }
+
 
 @media screen and (max-width: 680px) {
   .login_form_div{
