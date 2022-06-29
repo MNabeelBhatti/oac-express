@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import "./owner_header.css"
+import React, { useState } from "react";
+import "./owner_header.css";
+import { useNavigate } from "react-router-dom";
 import { Layout, Avatar, Dropdown, Radio, Card } from "antd";
 import {
   MenuFoldOutlined,
@@ -10,43 +11,68 @@ import {
   SettingOutlined,
   EditOutlined,
   EllipsisOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
+//Hooks
+import useUser from "../../../../Hooks/useUser";
+//Firebae
+import { auth } from "../../../../firebase";
+//i18n
+import { useTranslation } from "react-i18next";
+//Redux
+import { useDispatch, useSelector } from "react-redux";
+import {Language} from "../../../../../Redux/Actions/userActions"
+
+
 const { Header } = Layout;
 const { Meta } = Card;
+
+export default function OwnerHeader({ collapsed, setCollapsed }) {
+  const { t, i18n } = useTranslation();
+  const dispatch = useDispatch();
+  const { lng } = useSelector(state => state.userReducer);
+  const { user } = useUser();
+  const navigate = useNavigate();
+  let type = JSON.parse(sessionStorage.getItem("type")) || "";
 
   const Profile = () => {
     return (
       <Card
         style={{
-          width: 300,
+          width: 250,
         }}
-        cover={
-          <img
-            alt="example"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          />
-        }
+        // cover={
+        //   <img
+        //     alt="example"
+        //     src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+        //   />
+        // }
         actions={[
-          <SettingOutlined key="setting" />,
+          <LogoutOutlined key="logout" onClick={async () => {
+            if (window.confirm('Are you sure?')) {
+                await auth.signOut();
+                sessionStorage.clear();
+                navigate("/");
+            }
+         
+            
+          }}/>,
           <EditOutlined key="edit" />,
-          <EllipsisOutlined key="ellipsis" />,
+          // <EllipsisOutlined key="ellipsis" />,
         ]}
       >
         <Meta
           avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-          title="Card title"
-          description="This is the description"
+          title={type}
+          description={user.name}
         />
       </Card>
     );
   };
 
-export default function OwnerHeader({ collapsed, setCollapsed }) {
-  // const [collapsed, setCollapsed] = useState(false);
-
   return (
     <div>
-      <Header className="site-layout-background">
+      <Header className="site-layout-background owner_header">
         <div className="header_main_div">
           <div className="header_trigger_div">
             {React.createElement(
@@ -64,10 +90,12 @@ export default function OwnerHeader({ collapsed, setCollapsed }) {
             <div className="header_content_profile_div">
               <div>
                 <Radio.Group
-                  defaultValue="en"
+                  value={lng}
                   buttonStyle="solid"
                   onChange={(e) => {
                     let lng = e.target.value;
+                    dispatch(Language(lng));
+                    i18n.changeLanguage(lng);
                   }}
                 >
                   <Radio.Button va value={"en"}>
@@ -88,7 +116,7 @@ export default function OwnerHeader({ collapsed, setCollapsed }) {
                 <div className="profile_dropdown_div">
                   <Dropdown overlay={Profile} trigger={["click"]}>
                     <a onClick={(e) => e.preventDefault()}>
-                      <div>Owner</div>
+                      <div>{user.name}</div>
                     </a>
                   </Dropdown>
                 </div>

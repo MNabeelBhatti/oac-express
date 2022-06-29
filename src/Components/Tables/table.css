@@ -32,3 +32,14 @@
 .rounded_radio_btn{
     border-radius: 10px;
 }
+.ant-upload {
+width: 100%;
+}
+
+.ant-upload button {
+width: 100%;
+
+}
+.form_row_div{
+    margin-bottom: 24px;
+}

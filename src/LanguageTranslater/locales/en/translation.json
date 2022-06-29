@@ -12,7 +12,15 @@
   "routes": {
     "fleet_managment": "Fleet Managment",
     "transportation_request": "Transportation Requests",
-    "finance": "Finance"
+    "finance": "Finance",
+    "logout": "Logout",
+    "appointments": "Appointments",
+    "history": "History"
+  },
+  "fleet_managment": {
+    "fleet_managment": "Fleet Managment",
+    "driver": "Driver",
+    "truck": "Truck"
   },
   "buttonsTxt": {
     "login": "Login",

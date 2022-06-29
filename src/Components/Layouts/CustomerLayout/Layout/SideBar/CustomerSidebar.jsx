@@ -7,12 +7,18 @@ import {
   MenuUnfoldOutlined,
   UploadOutlined,
   VideoCameraOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 import { BsTruck } from "react-icons/bs";
+//firebase
+import { auth } from "../../../../firebase";
+//i18n
+import { useTranslation } from "react-i18next";
 const { Sider } = Layout;
 
 export default function CustomerSideBar({ collapsed }) {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   // const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -26,25 +32,37 @@ export default function CustomerSideBar({ collapsed }) {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          // defaultSelectedKeys={["1"]}
+          selectedKeys={[window.location.pathname]}
           items={[
             {
-              key: "1",
+              key: "/customer/apponentment",
               icon: <BsTruck />,
-              label: "Truck Appointments",
+              label: t("routes.appointments"),
               onClick: () => {
-                navigate("/home/customer/apponentment");
+                navigate("/customer/appointments");
               },
             },
             {
-              key: "2",
+              key: "/customer/history",
               icon: <VideoCameraOutlined />,
-              label: "History",
+              label:t("routes.history"),
               onClick: () => {
-                navigate("/home/customer/history");
+                navigate("/customer/history");
               },
             },
-         
+            {
+              key: "/",
+              icon: <LogoutOutlined />,
+              label: t("routes.logout"),
+              onClick: async () => {
+                if (window.confirm("Are you sure?")) {
+                  await auth.signOut();
+                  sessionStorage.clear();
+                  navigate("/");
+                }
+              },
+            },
           ]}
         >
           {/* <Menu.Item key={"truck"} icon={<BsTruck />}>

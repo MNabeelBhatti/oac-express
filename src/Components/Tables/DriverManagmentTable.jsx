@@ -11,8 +11,9 @@ import {
   Upload,
   Row,
   Col,
+  message
 } from "antd";
-
+import "./table.css";
 import {
   PlusCircleOutlined,
   SearchOutlined,
@@ -85,10 +86,21 @@ const data = [
   },
 ];
 export default function DriverManagmentTable() {
-  const { Dragger } = Upload;
-  const [checkStrictly, setCheckStrictly] = useState(false);
+   const [form] = Form.useForm();
+  const [formData, setFormData] = useState({
+    driverAddress: "",
+    driverAge: "",
+    driverId: "",
+    driverLicense: "",
+    driverName: "",
+    driverNationality: "",
+    portId: "",
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [fileList, setFileList] = useState([]);
+
   const onFinish = (values) => {
+   
     console.log("Received values of form: ", values);
   };
   const showModal = () => {
@@ -102,15 +114,27 @@ export default function DriverManagmentTable() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const getFile = (e) => {
-    console.log("Upload event:", e);
 
+  const getFile = (e, label) => {
+    // formData[label] = { file: e.file };
+    // setFormData({...formData})
+    console.log(e.file);
+    form.setFieldsValue({ driverId: e.file.originFileObj });
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
   };
+ 
   const AddModal = () => {
+    const layout = {
+      labelCol: {
+        span: 5,
+      },
+      // wrapperCol: {
+      //   span: 16,
+      // },
+    };
     return (
       <Modal
         title="Add New Driver"
@@ -120,7 +144,7 @@ export default function DriverManagmentTable() {
       >
         <div>
           <Form
-            name="normal_login"
+            name="control-hooks"
             className="login-form"
             initialValues={{
               remember: true,
@@ -131,7 +155,9 @@ export default function DriverManagmentTable() {
               <Row gutter={24}>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="driverName"
+                    // label="Name"
                     rules={[
                       {
                         required: true,
@@ -144,7 +170,9 @@ export default function DriverManagmentTable() {
                 </Col>
                 <Col span={12}>
                   <Form.Item
-                    name="driverage"
+                    hasFeedback
+                    name="driverAge"
+                    // label="Age"
                     rules={[
                       {
                         required: true,
@@ -152,84 +180,69 @@ export default function DriverManagmentTable() {
                       },
                     ]}
                   >
-                    <Input placeholder="Age" />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Input.Group>
-
-            <Form.Item
-              name="driverNationality"
-              rules={[
-                {
-                  required: true,
-                  message: "Requerd Field!",
-                },
-              ]}
-            >
-              <Input placeholder="Nationality" />
-            </Form.Item>
-            <Form.Item
-              name="driverAddress"
-              rules={[
-                {
-                  required: true,
-                  message: "Requerd Field!",
-                },
-              ]}
-            >
-              <Input placeholder="Address" />
-            </Form.Item>
-            <Input.Group>
-              <Row gutter={24}>
-                <Col span={11}>
-                  <Form.Item
-                    name="driverId"
-                    label="Driver ID"
-                    valuePropName="fileList"
-                    getValueFromEvent={getFile}
-                  >
-                    <Upload>
-                      <Button icon={<UploadOutlined />}>Click to upload</Button>
-                    </Upload>
-                  </Form.Item>
-                </Col>
-                <Col span={11}>
-                  <Form.Item
-                    name="driverLicense"
-                    label="Driver License"
-                    valuePropName="fileList"
-                    getValueFromEvent={getFile}
-                  >
-                    <Upload name="logo">
-                      <Button icon={<UploadOutlined />}>Click to upload</Button>
-                    </Upload>
+                    <Input type={"number"} placeholder="Age" />
                   </Form.Item>
                 </Col>
               </Row>
             </Input.Group>
             <Input.Group>
               <Row gutter={24}>
-                <Col span={11}>
+                <Col span={12}>
                   <Form.Item
-                    name="posrtId"
-                    label="Port ID"
-                    valuePropName="fileList"
-                    getValueFromEvent={getFile}
+                    hasFeedback
+                    name="driverNationality"
+                    // label="Nationality"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Requerd Field!",
+                      },
+                    ]}
                   >
-                    <Upload name="logo">
-                      <Button icon={<UploadOutlined />}>Click to upload</Button>
-                    </Upload>
+                    <Input placeholder="Nationality" />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    hasFeedback
+                    name="driverAddress"
+                    // label="Address"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Requerd Field!",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Address" />
                   </Form.Item>
                 </Col>
               </Row>
             </Input.Group>
-            {/* <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
 
-            </Form.Item> */}
+            <div className="form_row_div">
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Upload multiple={false} maxCount={1}>
+                    <Button icon={<UploadOutlined />}>Upload Driver ID</Button>
+                  </Upload>
+                </Col>
+                <Col span={12}>
+                  <Upload multiple={false} maxCount={1} name="logo">
+                    <Button icon={<UploadOutlined />}>Upload License</Button>
+                  </Upload>
+                </Col>
+              </Row>
+            </div>
+            <div className="form_row_div">
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Upload multiple={false} maxCount={1} name="logo">
+                    <Button icon={<UploadOutlined />}>Upload Port ID</Button>
+                  </Upload>
+                </Col>
+              </Row>
+            </div>
 
             <Form.Item>
               <Button
@@ -312,3 +325,71 @@ export default function DriverManagmentTable() {
     </div>
   );
 }
+
+
+
+ 
+          // <form onSubmit={handleSubmit}>
+          //   <div className="form_row_div">
+          //     <Row className="mb-2" gutter={24}>
+          //       <Col span={12}>
+          //         <Input required={true} placeholder="Name" />
+          //       </Col>
+          //       <Col span={12}>
+          //         <Input type={"number"} required placeholder="Age" />
+          //       </Col>
+          //     </Row>
+          //   </div>
+          //   <div className="form_row_div">
+          //     <Row className="mb-2" gutter={24}>
+          //       <Col span={12}>
+          //         <Input required={true} placeholder="Nationality" />
+          //       </Col>
+          //       <Col span={12}>
+          //         <Input type={"text"} required placeholder="Address" />
+          //       </Col>
+          //     </Row>
+          //   </div>
+          //   <div className="form_row_div">
+          //     <Row gutter={24}>
+          //       <Col span={12}>
+          //         <Upload
+          //           onChange={({ fileList }) => {
+          //             console.log(fileList);
+          //           }}
+          //           multiple={false}
+          //           maxCount={1}
+          //         >
+          //           <Button icon={<UploadOutlined />}>Driver ID</Button>
+          //         </Upload>
+          //       </Col>
+          //       <Col span={12}>
+          //         <Upload multiple={false} maxCount={1}>
+          //           <Button icon={<UploadOutlined />}>Driver Licence</Button>
+          //         </Upload>
+          //       </Col>
+          //     </Row>
+          //   </div>
+          //   <div className="form_row_div">
+          //     <Row gutter={24}>
+          //       <Col span={12}>
+          //         <Upload
+          //           required
+          //           onChange={({ fileList }) => {
+          //             console.log(fileList);
+          //           }}
+          //           multiple={false}
+          //           maxCount={1}
+          //         >
+          //           <Button icon={<UploadOutlined />}>Port ID</Button>
+          //         </Upload>
+          //       </Col>
+          //     </Row>
+          //   </div>
+
+          //   <div>
+          //     <button className="ant-btn ant-btn-primary" type="submit">
+          //       Add
+          //     </button>
+          //   </div>
+          // </form>;

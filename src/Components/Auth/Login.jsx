@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./login.css";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-import en from "../../LanguageTranslater/locales/en/translation.json";
 import {
   Button,
   Checkbox,
@@ -14,35 +13,74 @@ import {
   Divider,
   Row,
   Col,
+  Alert,
+  message
 } from "antd";
+//Api
+import { FindUser, AddUser } from "../API/API";
+//loader
+import Loader from "../Loaders/Loader";
+//Redux
+import { Language } from "../../Redux/Actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
 export default function Login() {
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+  const { lng } = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
   const [input, setInput] = useState(true);
   const [login, setLogin] = useState(true);
-  const [lng, setLng] = useState('en');
-
+  const [loading, setLoading] = useState(false);
   const onFinishLogin = (values) => {
-    console.log("Received values of form: ", values);
-    if (values.type === "owner") {
-      navigate("/home/owner/fleet_managment");
-    } else {
-      navigate("/home/customer/apponentment");
-    }
-
-    // navigate("/home/customer/apponentment");
+     setLoading(true);
+    FindUser(values).then((res) => {
+      if (res.status === "success") {
+        setLoading(false);
+        message.success('Login Successfully!')
+        if (values.userType === "owners") {
+          navigate("/owner/fleet_managment");
+        } else if (values.userType === "customers") {
+          navigate("/customer/appointment");
+        }
+      } else {
+        setLoading(false);
+        // alert(res.message);
+          message.error(res.message);
+      }
+        
+      })
+      .catch((e) => {
+        setLoading(false)
+       message.error(JSON.stringify(e));
+        //  alert(e);
+      });
   };
   const onFinishSignup = (values) => {
-    console.log("Received values of form: ", values);
-    if (values.type === "owner") {
-      navigate("/home/owner/fleet_managment");
-    } else {
-      navigate("/home/customer/apponentment");
-    }
+    setLoading(true);
+    AddUser(values)
+      .then((res) => {
+        if (res.status === "success") {
+          message.success("Signup Successfully!");
+        setLoading(false);
+        if (values.type === "owners") {
+          navigate("/owner/fleet_managment");
+        } else if (values.type === "customers") {
+          navigate("/customer/appointment");
+        }
+      }
+      })
+      .catch((e) => {
+        setLoading(false)
+        message.error(JSON.stringify(e))
+        //  alert(e);
+
+       return
+      });
   };
 
   return (
     <div className="main_login_div">
+      {loading ? <Loader /> : ""}
       <div className="login_background_div">
         <div className="login_content_div">
           <div className="login_wlp_div"></div>
@@ -63,7 +101,7 @@ export default function Login() {
                       buttonStyle="solid"
                       onChange={(e) => {
                         let lng = e.target.value;
-                        setLng(lng)
+                        dispatch(Language(lng));
                         i18n.changeLanguage(lng);
 
                         // i18n.language = lng;
@@ -89,13 +127,11 @@ export default function Login() {
                       <Form
                         name="normal_login"
                         className="login-form"
-                        initialValues={{
-                          remember: true,
-                        }}
                         onFinish={onFinishLogin}
                       >
                         <Form.Item
-                          name="useremail"
+                          name="userEmail"
+                          hasFeedback
                           rules={[
                             {
                               type: "email",
@@ -116,7 +152,8 @@ export default function Login() {
                           />
                         </Form.Item>
                         <Form.Item
-                          name="password"
+                          name="userPassword"
+                          hasFeedback
                           rules={[
                             {
                               required: true,
@@ -128,7 +165,7 @@ export default function Login() {
                             },
                           ]}
                         >
-                          <Input
+                          <Input.Password
                             prefix={
                               <LockOutlined className="site-form-item-icon" />
                             }
@@ -140,16 +177,9 @@ export default function Login() {
 
                         <Form.Item>
                           <div className="forget_div">
-                            {/* <Switch
-                              checked={input}
-                              checkedChildren="Owner"
-                              unCheckedChildren="Customer"
-                              onChange={() => {
-                                setInput(!input);
-                              }}
-                            /> */}
                             <Form.Item
-                              name={"type"}
+                              name={"userType"}
+                              hasFeedback
                               rules={[
                                 {
                                   required: true,
@@ -158,8 +188,8 @@ export default function Login() {
                               ]}
                             >
                               <Radio.Group>
-                                <Radio value={"owner"}>{t("Owner")}</Radio>
-                                <Radio value={"customer"}>
+                                <Radio value={"owners"}>{t("Owner")}</Radio>
+                                <Radio value={"customers"}>
                                   {t("Customer")}
                                 </Radio>
                               </Radio.Group>
@@ -200,16 +230,14 @@ export default function Login() {
                     <>
                       <Form
                         name="signup"
-                        className="login-form"
-                        initialValues={{
-                          remember: true,
-                        }}
+                        className="signup-form"
                         onFinish={onFinishSignup}
                       >
                         <Row gutter={24}>
                           <Col span={12}>
                             <Form.Item
-                              name="userName"
+                              name="name"
+                              hasFeedback
                               rules={[
                                 {
                                   required: true,
@@ -228,7 +256,8 @@ export default function Login() {
                           </Col>
                           <Col span={12}>
                             <Form.Item
-                              name="useremail"
+                              name="email"
+                              hasFeedback
                               rules={[
                                 {
                                   type: "email",
@@ -254,6 +283,7 @@ export default function Login() {
                           <Col span={12}>
                             <Form.Item
                               name="password"
+                              hasFeedback
                               rules={[
                                 {
                                   required: true,
@@ -265,7 +295,7 @@ export default function Login() {
                                 },
                               ]}
                             >
-                              <Input
+                              <Input.Password
                                 prefix={
                                   <LockOutlined className="site-form-item-icon" />
                                 }
@@ -279,6 +309,7 @@ export default function Login() {
                           <Col span={12}>
                             <Form.Item
                               name="confirmPassword"
+                              hasFeedback
                               rules={[
                                 {
                                   required: true,
@@ -298,13 +329,13 @@ export default function Login() {
                                     }
 
                                     return Promise.reject(
-                                      new Error(t("ConfirmPass"))
+                                      new Error(t("errorsTxt.passwordMatch"))
                                     );
                                   },
                                 }),
                               ]}
                             >
-                              <Input
+                              <Input.Password
                                 prefix={
                                   <LockOutlined className="site-form-item-icon" />
                                 }
@@ -321,13 +352,13 @@ export default function Login() {
                           rules={[
                             {
                               required: true,
-                              message: "Please Select type",
+                              message: t("errorsTxt.requiredField"),
                             },
                           ]}
                         >
                           <Radio.Group>
-                            <Radio value={"owner"}>{t("Owner")}</Radio>
-                            <Radio value={"customer"}>{t("Customer")}</Radio>
+                            <Radio value={"owners"}>{t("Owner")}</Radio>
+                            <Radio value={"customers"}>{t("Customer")}</Radio>
                           </Radio.Group>
                         </Form.Item>
 
@@ -345,14 +376,14 @@ export default function Login() {
 
                         <div>
                           <Divider orientation="center">
-                            Already have an account?{" "}
+                            {t("account.already_have_account")}?
                             <a
                               onClick={(e) => {
                                 e.preventDefault();
                                 setLogin(!login);
                               }}
                             >
-                              Login!
+                              {t("buttonsTxt.login")}
                             </a>
                           </Divider>
                         </div>

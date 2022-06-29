@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './owner_sidebar.css'
-import { Layout, Menu, }from "antd";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import "./owner_sidebar.css";
+import { Layout, Menu,Popconfirm } from "antd";
+import { SettingOutlined, LogoutOutlined } from "@ant-design/icons";
 import { BsTruck } from "react-icons/bs";
 import { ImCoinDollar } from "react-icons/im";
-
+import { auth } from "../../../../firebase";
+import { useTranslation } from "react-i18next";
 const { Sider } = Layout;
 
 export default function OwnerSideBar({ collapsed }) {
-const navigate=useNavigate()
+  const {t}=useTranslation()
+  const navigate = useNavigate();
   return (
     <div>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -27,30 +23,43 @@ const navigate=useNavigate()
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          // defaultSelectedKeys={["1"]}
+          selectedKeys={[window.location.pathname]}
           items={[
             {
-              key: "1",
+              key: "/owner/fleet_managment",
               icon: <SettingOutlined />,
-              label: "Fleet Managment",
+              label: t("routes.fleet_managment"),
               onClick: () => {
-                navigate("/home/owner/fleet_managment");
+                navigate("/owner/fleet_managment");
               },
             },
             {
-              key: "2",
-              icon: <BsTruck/>,
-              label: "Transportation Requests",
+              key: "/owner/transportation_requests",
+              icon: <BsTruck />,
+              label: t("routes.transportation_request"),
               onClick: () => {
-                navigate("/home/owner/transportation_requests");
+                navigate("/owner/transportation_requests");
               },
             },
             {
-              key: "3",
-              icon: <ImCoinDollar/>,
-              label: "Finance",
+              key: "/owner/finance",
+              icon: <ImCoinDollar />,
+              label: t("routes.finance"),
               onClick: () => {
-                navigate("/home/owner/finance");
+                navigate("/owner/finance");
+              },
+            },
+            {
+              key: "/",
+              icon: <LogoutOutlined />,
+              label:  t("routes.logout"),
+              onClick: async () => {
+                if (window.confirm("Are you sure?")) {
+                  await auth.signOut();
+                  sessionStorage.clear();
+                  navigate("/");
+                }
               },
             },
           ]}

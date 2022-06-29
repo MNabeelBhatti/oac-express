@@ -12,7 +12,13 @@
   "routes": {
     "fleet_managment": "إدارة الأسطول",
     "transportation_request": "طلب النقل",
-    "finance": "المالية"
+    "finance": "المالية",
+    "logout": "تسجيل خروج",
+    "appointments": "تعيينات",
+    "history": "تاريخ"
+  },
+  "fleet_managment":{
+
   },
   "buttonsTxt": {
     "login": "تسجيل الدخول",

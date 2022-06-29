@@ -15,14 +15,13 @@ export default function OwnerLayout({ children }) {
         <Layout className="site-layout">
           <OwnerHeader collapsed={collapsed} setCollapsed={setCollapsed} />
           <Content
-            className="site-layout-background"
+            className="site-layout-background "
             style={{
               margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
+              padding: "24px",
             }}
           >
-            {children}
+            <div >{children}</div>
           </Content>
         </Layout>
       </Layout>

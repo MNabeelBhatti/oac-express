@@ -106,6 +106,7 @@ export default function TruckManagmentTable() {
               <Row gutter={24}>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="truckModel"
                     rules={[
                       {
@@ -119,6 +120,7 @@ export default function TruckManagmentTable() {
                 </Col>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="truckplate"
                     rules={[
                       {
@@ -137,6 +139,7 @@ export default function TruckManagmentTable() {
               <Row gutter={24}>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="truckCapcity"
                     rules={[
                       {
@@ -154,6 +157,7 @@ export default function TruckManagmentTable() {
                 </Col>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="truckHeight"
                     rules={[
                       {
@@ -175,6 +179,7 @@ export default function TruckManagmentTable() {
               <Row gutter={24}>
                 <Col span={12}>
                   <Form.Item
+                    hasFeedback
                     name="truckType"
                     rules={[
                       {
@@ -191,26 +196,12 @@ export default function TruckManagmentTable() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item
-                    name="truckLcience"
-                                    valuePropName="fileList"
-                                    label='License'
-                      getValueFromEvent={getFile}
-                  >
-                    <Upload multiple={false} name="logo"  listType="picture">
-                      <Button icon={<UploadOutlined />}>upload license</Button>
-                    </Upload>
-                  </Form.Item>
+                  <Upload multiple={false} name="logo" listType="picture">
+                    <Button icon={<UploadOutlined />}>upload license</Button>
+                  </Upload>
                 </Col>
               </Row>
             </Input.Group>
-            {/* <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
-            </Form.Item> */}
-
             <Form.Item>
               <Button
                 type="primary"

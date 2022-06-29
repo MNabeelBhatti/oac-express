@@ -7,7 +7,7 @@ export default function CustomerRoutes() {
     <div>
       <Routes>
         <Route
-          path="apponentment"
+          path="appointment"
           element={
             <CustomerLayout>
               <Appointment />

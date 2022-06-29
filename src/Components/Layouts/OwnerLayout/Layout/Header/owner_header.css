@@ -16,6 +16,16 @@
   margin: 16px;
   background: rgba(255, 255, 255, 0.3);
 }
+/* .owner_header{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 90px;
+  position: fixed;
+  top: 0;
+ width: 100%;
+  height: fit-content;
+  z-index: 1;
+} */
 
 .logo_div{
    display: flex;
@@ -55,3 +65,12 @@
 .header_contnet_name_div{
     padding-left: 20px;
 }
+
+/* @media screen and (max-width:740px){
+  .header_content_div{
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    padding: 5px;
+  }
+} */
