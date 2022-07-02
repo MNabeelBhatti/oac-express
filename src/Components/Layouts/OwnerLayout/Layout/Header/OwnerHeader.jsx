@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./owner_header.css";
 import { useNavigate } from "react-router-dom";
-import { Layout, Avatar, Dropdown, Radio, Card } from "antd";
+import { Layout, Avatar, Dropdown, Radio, Card, Popconfirm } from "antd";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -21,8 +21,8 @@ import { auth } from "../../../../firebase";
 import { useTranslation } from "react-i18next";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import {Language} from "../../../../../Redux/Actions/userActions"
-
+import { Language } from "../../../../../Redux/Actions/userActions";
+import { Logout } from "../../../../API/API";
 
 const { Header } = Layout;
 const { Meta } = Card;
@@ -30,7 +30,7 @@ const { Meta } = Card;
 export default function OwnerHeader({ collapsed, setCollapsed }) {
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
-  const { lng } = useSelector(state => state.userReducer);
+  const { lng } = useSelector((state) => state.userReducer);
   const { user } = useUser();
   const navigate = useNavigate();
   let type = JSON.parse(sessionStorage.getItem("type")) || "";
@@ -48,15 +48,10 @@ export default function OwnerHeader({ collapsed, setCollapsed }) {
         //   />
         // }
         actions={[
-          <LogoutOutlined key="logout" onClick={async () => {
-            if (window.confirm('Are you sure?')) {
-                await auth.signOut();
-                sessionStorage.clear();
-                navigate("/");
-            }
-         
-            
-          }}/>,
+          <LogoutOutlined
+            key="logout"
+            onClick={Logout}
+          />,
           <EditOutlined key="edit" />,
           // <EllipsisOutlined key="ellipsis" />,
         ]}

@@ -22,6 +22,7 @@ import { useTranslation } from "react-i18next";
 //Redux
 import { useDispatch, useSelector } from "react-redux";
 import { Language } from "../../../../../Redux/Actions/userActions";
+import { Logout } from "../../../../API/API";
 
 const { Header } = Layout;
 const { Meta } = Card;
@@ -49,13 +50,7 @@ export default function CustomerHeader({ collapsed, setCollapsed }) {
         actions={[
           <LogoutOutlined
             key="logout"
-            onClick={async () => {
-              if (window.confirm("Are you sure?")) {
-                await auth.signOut();
-                sessionStorage.clear();
-                navigate("/");
-              }
-            }}
+            onClick={Logout}
           />,
           <EditOutlined key="edit" />,
           // <EllipsisOutlined key="ellipsis" />,

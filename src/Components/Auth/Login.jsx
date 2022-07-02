@@ -55,6 +55,7 @@ export default function Login() {
         //  alert(e);
       });
   };
+
   const onFinishSignup = (values) => {
     setLoading(true);
     AddUser(values)
@@ -67,6 +68,9 @@ export default function Login() {
         } else if (values.type === "customers") {
           navigate("/customer/appointment");
         }
+        } else {
+           setLoading(false);
+           message.error(res.message);
       }
       })
       .catch((e) => {
@@ -103,8 +107,6 @@ export default function Login() {
                         let lng = e.target.value;
                         dispatch(Language(lng));
                         i18n.changeLanguage(lng);
-
-                        // i18n.language = lng;
                       }}
                     >
                       <Radio.Button value={"en"}>English</Radio.Button>

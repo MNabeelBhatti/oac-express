@@ -7,11 +7,14 @@ import { BsTruck } from "react-icons/bs";
 import { ImCoinDollar } from "react-icons/im";
 import { auth } from "../../../../firebase";
 import { useTranslation } from "react-i18next";
+import { Logout } from "../../../../API/API";
 const { Sider } = Layout;
 
 export default function OwnerSideBar({ collapsed }) {
-  const {t}=useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate();
+ 
+  const [loading, setLoading] = useState(false);
   return (
     <div>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -54,13 +57,7 @@ export default function OwnerSideBar({ collapsed }) {
               key: "/",
               icon: <LogoutOutlined />,
               label:  t("routes.logout"),
-              onClick: async () => {
-                if (window.confirm("Are you sure?")) {
-                  await auth.signOut();
-                  sessionStorage.clear();
-                  navigate("/");
-                }
-              },
+              onClick: Logout
             },
           ]}
         >

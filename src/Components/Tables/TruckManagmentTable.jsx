@@ -1,225 +1,135 @@
 import React, { useState } from "react";
-import {
-  Table,
-  Modal,
-  Button,
-  Switch,
-  Input,
-  Radio,
-  Checkbox,
-  Form,
-  Upload,
-  Row,
-  Col,
-  Select,
-} from "antd";
+import { Table, Button, Input, Popconfirm, Space, Select } from "antd";
 
 import {
   PlusCircleOutlined,
   SearchOutlined,
   UploadOutlined,
+  DeleteOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
-
-const columns = [
-  {
-    title: "Model",
-    dataIndex: "model",
-    key: "model",
-  },
-  {
-    title: "Plate",
-    dataIndex: "plate",
-    key: "plate",
-  },
-  {
-    title: "Type",
-    dataIndex: "type",
-    key: "type",
-  },
-  {
-    title: "Capacity",
-    dataIndex: "capacity",
-    key: "capacity",
-  },
-  {
-    title: "Action",
-    dataIndex: "",
-    key: "x",
-    render: () => <a>Delete</a>,
-  },
-];
-const data = [
-  {
-    key: 1,
-    model: "Honda",
-    plate: "lxe 8908",
-    type: "heavy",
-        capacity: "40 Ton",
-    description:'It is Honda company heavy truck with 40 ton weight capacity'
-  },
-];
-
+import AddTruckModal from "../Modals/AddTruckModal";
+import useTrucks from "../Hooks/useTrucks";
+import useDrivers from "../Hooks/useDrivers";
+import { DeleteTruck, UpdateTruck } from "../API/API";
 export default function TruckManagmentTable() {
-    const { Option } = Select;
-  const [checkStrictly, setCheckStrictly] = useState(false);
+  const { Option } = Select;
+  const { trucks } = useTrucks();
+  const { drivers } = useDrivers();
+  const [search, setSearch] = useState("");
+
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
+  // const getFile = (e) => {
+  //   console.log("Upload event:", e);
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    };
-    const getFile = (e) => {
-      console.log("Upload event:", e);
+  //   if (Array.isArray(e)) {
+  //     return e;
+  //   }
+  //   return e && e.fileList;
+  // };
 
-      if (Array.isArray(e)) {
-        return e;
-      }
-      return e && e.fileList;
-    };
-  const AddModal = () => {
-    return (
-      <Modal
-        title="Add New Truck"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <div>
-          <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-              remember: true,
+  const columns = [
+    {
+      title: "Model",
+      dataIndex: "truckModel",
+      key: "truckModel",
+    },
+    {
+      title: "Plate",
+      dataIndex: "truckPlate",
+      key: "truckplate",
+    },
+    {
+      title: "Type",
+      dataIndex: "truckType",
+      key: "truckType",
+    },
+    {
+      title: "Capacity",
+      dataIndex: "truckCapacity",
+      key: "truckCapacity",
+    },
+    {
+      title: "Driver",
+      // dataIndex: "driver",
+      // key: "driver",
+      render: (record) => (
+        <Space>
+          <Select
+            placeholder={"choose driver"}
+            onChange={(e) => {
+              
+              UpdateTruck(record.uid, {
+                ...record,
+                driver: drivers[e],
+                isDriver: true,
+              });
             }}
-            onFinish={onFinish}
           >
-            <Input.Group>
-              <Row gutter={24}>
-                <Col span={12}>
-                  <Form.Item
-                    hasFeedback
-                    name="truckModel"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Requerd Field!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Model" />
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    hasFeedback
-                    name="truckplate"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Requerd Field!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Plate" />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Input.Group>
+            {drivers.length > 0 ? (
+              drivers
+                .filter((val) => val.isTruck === undefined && !val.isTruck)
+                .map((v, i) => {
+                  return (
+                    <Option
+                      // selected={
+                      //   v.uid === record?.driver &&
+                      //   record.driver !== undefined &&
+                      //   record.driver.uid
+                      // }
+                      value={i}
+                    >
+                      {v.driverName}
+                    </Option>
+                  );
+                })
+            ) : (
+              <Option selected disabled>
+                No Driver Avaiable
+              </Option>
+            )}
+          </Select>
+        </Space>
+      ),
+    },
+    {
+      title: "Action",
+      dataIndex: "",
+      key: "x",
+      align: "center",
+      render: (record) => (
+        <Space>
+          {/* <span className="ant-btn  ant-btn-warn">
+            <EditOutlined />
+          </span> */}
 
-            <Input.Group>
-              <Row gutter={24}>
-                <Col span={12}>
-                  <Form.Item
-                    hasFeedback
-                    name="truckCapcity"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Requerd Field!",
-                      },
-                    ]}
-                  >
-                    <Select placeholder={"select capcity"}>
-                      <Option value="20 Ton">20 Ton</Option>
-                      <Option value="30 Ton">30 Ton</Option>
-                      <Option value="30 Ton">40 Ton</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item
-                    hasFeedback
-                    name="truckHeight"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Requerd Field!",
-                      },
-                    ]}
-                  >
-                    <Select placeholder={"select hight"}>
-                      <Option value="20 feet">20 feet</Option>
-                      <Option value="30 feet">30 feet</Option>
-                      <Option value="30 feet">40 feet</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Input.Group>
-            <Input.Group>
-              <Row gutter={24}>
-                <Col span={12}>
-                  <Form.Item
-                    hasFeedback
-                    name="truckType"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Requerd Field!",
-                      },
-                    ]}
-                  >
-                    <Select placeholder={"select type"}>
-                      <Option value="small">Small</Option>
-                      <Option value="meduim">Meduim</Option>
-                      <Option value="large">Large</Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Upload multiple={false} name="logo" listType="picture">
-                    <Button icon={<UploadOutlined />}>upload license</Button>
-                  </Upload>
-                </Col>
-              </Row>
-            </Input.Group>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-              >
-                Add
-              </Button>
-            </Form.Item>
-          </Form>
-        </div>
-      </Modal>
-    );
-  };
-
+          <Popconfirm
+            title={"Are you sure?"}
+            okText="Ok"
+            cancelText="Cancel"
+            onConfirm={() => {
+              DeleteTruck(record?.uid);
+            }}
+          >
+            <span className="ant-btn ant-btn-danger">
+              <DeleteOutlined />
+            </span>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
   return (
     <div>
-      <AddModal />
+      <AddTruckModal
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+      />
       {/* <div className="table_topar_div">
         <div className="table_topar_add_div">
           <Radio.Group
@@ -262,23 +172,40 @@ export default function TruckManagmentTable() {
           size="middle"
           placeholder="Serach"
           prefix={<SearchOutlined />}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
         />
       </div>
       <Table
         columns={columns}
-        expandable={{
-          expandedRowRender: (record) => (
-            <p
-              style={{
-                margin: 0,
-              }}
-            >
-              {record.description}
-            </p>
-          ),
-          rowExpandable: (record) => record.name !== "Not Expandable",
-        }}
-        dataSource={data}
+        // expandable={{
+        //   expandedRowRender: (record) => (
+        //     <p
+        //       style={{
+        //         margin: 0,
+        //       }}
+        //     >
+        //       {record.description}
+        //     </p>
+        //   ),
+        //   rowExpandable: (record) => record.name !== "Not Expandable",
+        // }}
+        dataSource={trucks.filter((val) => {
+          if (search == "") {
+            return val;
+          } else if (
+            val &&
+            Object.keys(val).some((v) =>
+              val[v]
+                .toString()
+                .toLowerCase()
+                .includes(search.toString().toLowerCase())
+            )
+          ) {
+            return val;
+          }
+        })}
       />
     </div>
   );

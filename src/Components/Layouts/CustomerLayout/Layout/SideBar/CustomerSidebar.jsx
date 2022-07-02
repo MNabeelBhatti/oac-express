@@ -14,6 +14,7 @@ import { BsTruck } from "react-icons/bs";
 import { auth } from "../../../../firebase";
 //i18n
 import { useTranslation } from "react-i18next";
+import { Logout } from "../../../../API/API";
 const { Sider } = Layout;
 
 export default function CustomerSideBar({ collapsed }) {
@@ -46,7 +47,7 @@ export default function CustomerSideBar({ collapsed }) {
             {
               key: "/customer/history",
               icon: <VideoCameraOutlined />,
-              label:t("routes.history"),
+              label: t("routes.history"),
               onClick: () => {
                 navigate("/customer/history");
               },
@@ -55,13 +56,8 @@ export default function CustomerSideBar({ collapsed }) {
               key: "/",
               icon: <LogoutOutlined />,
               label: t("routes.logout"),
-              onClick: async () => {
-                if (window.confirm("Are you sure?")) {
-                  await auth.signOut();
-                  sessionStorage.clear();
-                  navigate("/");
-                }
-              },
+              onClick: Logout
+              
             },
           ]}
         >

@@ -14,6 +14,7 @@ i18n
       ar:{translations:ar}
       
     },
+    lng:'en',
     fallbackLng: "en",
     debug: false,
 
