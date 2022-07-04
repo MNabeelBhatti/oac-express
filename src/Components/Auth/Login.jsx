@@ -40,7 +40,7 @@ export default function Login() {
         if (values.userType === "owners") {
           navigate("/owner/fleet_managment");
         } else if (values.userType === "customers") {
-          navigate("/customer/appointment");
+          navigate("/customer/tarnsport_requests");
         }
       } else {
         setLoading(false);
@@ -66,7 +66,7 @@ export default function Login() {
         if (values.type === "owners") {
           navigate("/owner/fleet_managment");
         } else if (values.type === "customers") {
-          navigate("/customer/appointment");
+          navigate("/customer/tarnsport_requests");
         }
         } else {
            setLoading(false);

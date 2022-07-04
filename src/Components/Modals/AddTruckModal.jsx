@@ -63,6 +63,7 @@ export default function AddTruckModal({ isModalVisible, setIsModalVisible }) {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        destroyOnClose
       >
         {loading ? <Loader /> : ""}
         <div>
@@ -185,7 +186,7 @@ export default function AddTruckModal({ isModalVisible, setIsModalVisible }) {
                 </Col>
               </Row>
             </Input.Group>
-            <Input.Group>
+            {/* <Input.Group>
               <Row gutter={24}>
                 <Col span={12}>
                   <Form.Item>
@@ -214,7 +215,7 @@ export default function AddTruckModal({ isModalVisible, setIsModalVisible }) {
                   </Form.Item>
                 </Col>
               </Row>
-            </Input.Group>
+            </Input.Group> */}
             <Form.Item>
               <Button
                 type="primary"

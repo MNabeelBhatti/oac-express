@@ -83,6 +83,7 @@ export default function AddDriverModal({ isModalVisible, setIsModalVisible }) {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        destroyOnClose
       >
         {loading ? <Loader /> : ""}
         <div>

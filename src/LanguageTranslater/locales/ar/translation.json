@@ -15,7 +15,8 @@
     "finance": "المالية",
     "logout": "تسجيل خروج",
     "appointments": "تعيينات",
-    "history": "تاريخ"
+    "history": "تاريخ",
+    "transport_request": "طلبات النقل"
   },
   "fleet_managment":{
 

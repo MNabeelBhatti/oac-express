@@ -54,49 +54,53 @@ export default function TruckManagmentTable() {
       dataIndex: "truckCapacity",
       key: "truckCapacity",
     },
-    {
-      title: "Driver",
-      // dataIndex: "driver",
-      // key: "driver",
-      render: (record) => (
-        <Space>
-          <Select
-            placeholder={"choose driver"}
-            onChange={(e) => {
+    // {
+    //   title: "Driver",
+    //   // dataIndex: "driver",
+    //   // key: "driver",
+    //   render: (record) => (
+    //     <Space>
+    //       <Select
+    //         placeholder={"choose driver"}
+    //       value={record?.driver?.driverName}
+    //         onChange={(e) => {
               
-              UpdateTruck(record.uid, {
-                ...record,
-                driver: drivers[e],
-                isDriver: true,
-              });
-            }}
-          >
-            {drivers.length > 0 ? (
-              drivers
-                .filter((val) => val.isTruck === undefined && !val.isTruck)
-                .map((v, i) => {
-                  return (
-                    <Option
-                      // selected={
-                      //   v.uid === record?.driver &&
-                      //   record.driver !== undefined &&
-                      //   record.driver.uid
-                      // }
-                      value={i}
-                    >
-                      {v.driverName}
-                    </Option>
-                  );
-                })
-            ) : (
-              <Option selected disabled>
-                No Driver Avaiable
-              </Option>
-            )}
-          </Select>
-        </Space>
-      ),
-    },
+    //           UpdateTruck(record.uid, {
+    //             ...record,
+    //             driver: drivers[e],
+    //             isDriver: true,
+    //           });
+    //         }}
+    //       >
+    //         {drivers.length > 0 ? (
+    //           drivers
+    //             // .filter((val) => val.isTruck === undefined && !val.isTruck)
+    //             .map((v, i) => {
+    //               return (
+    //                 <Option
+    //                   selected={
+    //                     v.uid === record?.driver &&
+    //                     record.driver !== undefined &&
+    //                     record.driver.uid
+    //                   }
+    //                   value={i}
+    //                   disabled={v.isTruck !== undefined && v.isTruck}
+                      
+                      
+    //                 >
+    //                   {v.driverName}
+    //                 </Option>
+    //               );
+    //             })
+    //         ) : (
+    //           <Option selected disabled>
+    //             No Driver Avaiable
+    //           </Option>
+    //         )}
+    //       </Select>
+    //     </Space>
+    //   ),
+    // },
     {
       title: "Action",
       dataIndex: "",
@@ -163,7 +167,7 @@ export default function TruckManagmentTable() {
           size={"middle"}
           onClick={showModal}
         >
-          {"Add"}
+          {"Add Truck"}
         </Button>
       </div>
       <div className="table_search_div">

@@ -37,11 +37,11 @@ export default function CustomerSideBar({ collapsed }) {
           selectedKeys={[window.location.pathname]}
           items={[
             {
-              key: "/customer/apponentment",
+              key: "/customer/tarnsport_requests",
               icon: <BsTruck />,
-              label: t("routes.appointments"),
+              label: t("routes.transport_request"),
               onClick: () => {
-                navigate("/customer/appointments");
+                navigate("/customer/tarnsport_requests");
               },
             },
             {
@@ -56,8 +56,7 @@ export default function CustomerSideBar({ collapsed }) {
               key: "/",
               icon: <LogoutOutlined />,
               label: t("routes.logout"),
-              onClick: Logout
-              
+              onClick: Logout,
             },
           ]}
         >

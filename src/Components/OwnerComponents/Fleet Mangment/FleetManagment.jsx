@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs } from "antd";
 import DriverManagmentTable from "../../Tables/DriverManagmentTable";
 import TruckManagmentTable from "../../Tables/TruckManagmentTable";
+import TruckDriverTable from "../../Tables/TruckDriverTable";
 import { useTranslation } from "react-i18next";
 export default function FleetManagment() {
   const { t } = useTranslation();
@@ -9,7 +10,7 @@ export default function FleetManagment() {
   return (
     <div>
       <div>
-        <h3>{t('routes.fleet_managment')}</h3>
+        <h3>{t("routes.fleet_managment")}</h3>
       </div>
       <div>
         <Tabs defaultActiveKey="1">
@@ -17,7 +18,10 @@ export default function FleetManagment() {
             <DriverManagmentTable />
           </TabPane>
           <TabPane tab="Truck" key="2">
-            <TruckManagmentTable/>
+            <TruckManagmentTable />
+          </TabPane>
+          <TabPane tab="Trucks & Drivers " key="3">
+            <TruckDriverTable />
           </TabPane>
         </Tabs>
       </div>

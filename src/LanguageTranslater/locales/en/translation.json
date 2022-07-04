@@ -12,6 +12,8 @@
   "routes": {
     "fleet_managment": "Fleet Managment",
     "transportation_request": "Transportation Requests",
+    "transport_request": "Transport Requests",
+
     "finance": "Finance",
     "logout": "Logout",
     "appointments": "Appointments",

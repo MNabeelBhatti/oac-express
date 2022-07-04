@@ -1,50 +1,75 @@
 import React, { useState } from "react";
-import { Table, Button, Input, Space, Popconfirm, Pagination } from "antd";
-import "./table.css";
+import { Table, Button, Input, Popconfirm, Space, Select } from "antd";
+
 import {
   PlusCircleOutlined,
   SearchOutlined,
   UploadOutlined,
-  EditOutlined,
   DeleteOutlined,
+  EditOutlined,
 } from "@ant-design/icons";
-import AddDriverModal from "../Modals/AddDriverModal";
-import useDrivers from "../Hooks/useDrivers";
-import { DeleteDriver } from "../API/API";
+import MakeRequestModal from "../Modals/MakeRequestModal";
+import useCustomerRequests from "../Hooks/useCustomerRequests";
+import { DeleteRequest} from "../API/API";
 
-export default function DriverManagmentTable() {
-  const { drivers } = useDrivers();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+export default function CustomerRequestTable() {
+
+  const { customerRequests } = useCustomerRequests();
   const [search, setSearch] = useState("");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const showModal = () => {
-    setIsModalVisible(!isModalVisible);
+    setIsModalVisible(true);
   };
+
+  
 
   const columns = [
     {
       title: "Name",
-      dataIndex: "driverName",
-      key: "driverName",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Age",
-      dataIndex: "driverAge",
-      key: "driverAge",
+      title: "Place",
+      dataIndex: "place",
+      key: "place",
     },
     {
-      title: "Nationality",
-      dataIndex: "driverNationality",
-      key: "driverNationality",
+      title: "From",
+      dataIndex: "from",
+      key: "from",
     },
     {
-      title: "Address",
-      dataIndex: "driverAddress",
-      key: "driverAddress",
+      title: "To",
+      dataIndex: "to",
+      key: "to",
     },
+    {
+      title: "Distance",
+      dataIndex: "distance",
+      key: "distance",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+    },
+    {
+      title: "Capacity",
+      dataIndex: "capacity",
+      key: "capacity",
+    },
+
     {
       title: "Action",
-
       dataIndex: "",
       key: "x",
       align: "center",
@@ -59,7 +84,7 @@ export default function DriverManagmentTable() {
             okText="Ok"
             cancelText="Cancel"
             onConfirm={() => {
-              DeleteDriver(record?.uid);
+              DeleteRequest(record?.uid, record);
             }}
           >
             <span className="ant-btn ant-btn-danger">
@@ -70,10 +95,9 @@ export default function DriverManagmentTable() {
       ),
     },
   ];
-
   return (
     <div>
-      <AddDriverModal
+      <MakeRequestModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
       />
@@ -86,7 +110,7 @@ export default function DriverManagmentTable() {
           size={"middle"}
           onClick={showModal}
         >
-          {"Add Driver"}
+          {"Make New Request"}
         </Button>
       </div>
       <div className="table_search_div">
@@ -114,24 +138,26 @@ export default function DriverManagmentTable() {
         //   ),
         //   rowExpandable: (record) => record.name !== "Not Expandable",
         // }}
-
-        dataSource={drivers.filter((val) => {
-          if (search == "") {
-            return val;
-          } else if (
-            val &&
-            Object.keys(val).some((v) =>
-              val[v]
-                .toString()
-                .toLowerCase()
-                .includes(search.toString().toLowerCase())
-            )
-          ) {
-            return val;
-          }
-        })}
+        dataSource={
+          customerRequests &&
+          customerRequests.length > 0 &&
+          customerRequests.filter((val) => {
+            if (search == "") {
+              return val;
+            } else if (
+              val &&
+              Object.keys(val).some((v) =>
+                val[v]
+                  .toString()
+                  .toLowerCase()
+                  .includes(search.toString().toLowerCase())
+              )
+            ) {
+              return val;
+            }
+          })
+        }
       />
-    
     </div>
   );
 }

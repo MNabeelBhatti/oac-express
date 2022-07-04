@@ -25,7 +25,7 @@ export default function AppRoutes() {
               uid !== null && type !== null && type === "owners" ? (
                 <Navigate to={"/owner/fleet_managment"} />
               ) : uid !== null && type !== null && type === "customers" ? (
-                <Navigate to={"/customer/appointment"} />
+                <Navigate to={"/customer/tarnsport_requests"} />
               ) : (
                 <Login />
               )

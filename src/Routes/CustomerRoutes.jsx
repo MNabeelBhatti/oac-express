@@ -2,15 +2,16 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Appointment from "../Components/Appointment/Appointment";
 import CustomerLayout from "../Components/Layouts/CustomerLayout/Layout/CustomerLayout";
+import TransportRequets from "../Components/CustomerComponents/TransportRequests/TransportRequets";
 export default function CustomerRoutes() {
   return (
     <div>
       <Routes>
         <Route
-          path="appointment"
+          path="tarnsport_requests"
           element={
             <CustomerLayout>
-              <Appointment />
+              <TransportRequets />
             </CustomerLayout>
           }
         />
