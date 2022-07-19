@@ -6,6 +6,7 @@ import {
   SearchOutlined,
   UploadOutlined,
   EditOutlined,
+ 
   DeleteOutlined,
 } from "@ant-design/icons";
 import AddDriverModal from "../Modals/AddDriverModal";
@@ -50,10 +51,7 @@ export default function DriverManagmentTable() {
       align: "center",
       render: (record) => (
         <Space>
-          {/* <span className="ant-btn  ant-btn-warn">
-            <EditOutlined />
-          </span> */}
-
+       
           <Popconfirm
             title={"Are you sure?"}
             okText="Ok"

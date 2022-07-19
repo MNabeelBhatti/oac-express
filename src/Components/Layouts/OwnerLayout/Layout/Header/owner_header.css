@@ -1,4 +1,5 @@
 
+
 #components-layout-demo-custom-trigger .trigger {
   padding: 0 24px;
   font-size: 18px;
@@ -55,22 +56,20 @@
 .header_content_profile_div{
   display: flex;
   justify-content: space-between;
-   padding-right: 30px;
+   /* padding-right: 30px; */
 }
 .header_profile_div{
     display: flex;
     justify-content: space-around;
     padding-left: 10px;
+    padding-right: 10px;
 }
 .header_contnet_name_div{
     padding-left: 20px;
 }
 
-/* @media screen and (max-width:740px){
-  .header_content_div{
-    flex-direction: column;
-    align-items: center;
-    height: fit-content;
-    padding: 5px;
-  }
-} */
+@media screen and (max-width:640px){
+.ant-layout-header{
+  padding: 0px !important;
+}
+}

@@ -2,6 +2,8 @@ import { db, auth, storage } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from "firebase/auth";
 import {
   collection,
@@ -18,6 +20,7 @@ import { message } from "antd";
 export const AddUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     await createUserWithEmailAndPassword(auth, data.email, data.password)
+    
       .then(async () => {
         const userRef = doc(collection(db, data.type), auth.currentUser.uid);
         let user = {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../firebase";
 export default function useTransports() {
-    const id = JSON.parse(sessionStorage.getItem("uid"));
+    const id = JSON.parse(sessionStorage.getItem("customerId"));
   const [customerRequests, setcustomerRequests] = useState([]);
   const getcustomerRequests = async () => {
     let q = query(

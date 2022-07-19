@@ -77,7 +77,7 @@ export default function AddTruckDriverModal({ isModalVisible, setIsModalVisible 
                   <Form.Item>
                     <Select
                       placeholder={"choose driver"}
-                      value={formData.driver?.driverName}
+                      // value={formData.driver?.driverName}
                       onChange={(value) => {
                         formData.driver = drivers[value];
                         setFormData({
@@ -87,11 +87,19 @@ export default function AddTruckDriverModal({ isModalVisible, setIsModalVisible 
                     >
                       {drivers.length > 0 ? (
                         drivers
-                          .filter(
-                            (val) => val.isTruck === undefined && !val.isTruck
-                          )
+                          // .filter(
+                          //   (val) => val.isTruck === undefined && !val.isTruck
+                          // )
                           .map((v, i) => {
-                            return <Option value={i}>{v.driverName}</Option>;
+                      
+                            return (
+                              <Option
+                              value={i}
+                                disabled={v.isTruck !== undefined && v.isTruck===true}
+                              >
+                                {v.driverName}
+                              </Option>
+                            );
                           })
                       ) : (
                         <Option disabled>No Driver Avaiable</Option>
@@ -114,11 +122,11 @@ export default function AddTruckDriverModal({ isModalVisible, setIsModalVisible 
                     >
                       {trucks.length > 0 ? (
                         trucks
-                          .filter(
-                            (val) => val.isDriver === undefined && !val.isDriver
-                          )
+                          // .filter(
+                          //   (val) => val.isDriver === undefined && !val.isDriver
+                          // )
                           .map((v, i) => {
-                            return <Option value={i}>{v.truckPlate}</Option>;
+                            return <Option disabled={v.isDriver===true} value={i}>{v.truckPlate}</Option>;
                           })
                       ) : (
                         <Option disabled>No Truck Avaiable</Option>

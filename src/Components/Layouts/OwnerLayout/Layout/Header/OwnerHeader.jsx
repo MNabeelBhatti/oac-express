@@ -85,6 +85,8 @@ export default function OwnerHeader({ collapsed, setCollapsed }) {
             <div className="header_content_profile_div">
               <div>
                 <Radio.Group
+                  className="radio_group"
+                  size="small"
                   value={lng}
                   buttonStyle="solid"
                   onChange={(e) => {
